@@ -10,7 +10,7 @@
             "request": "launch",
             "mode": "auto",
             "cwd": "${workspaceFolder}",
-            "program": "main.go",
+            "program": "${workspaceFolder}",
             "env": {
                 "APP_ENV": "local"
             },

@@ -7,7 +7,6 @@ import (
 
 	"github.com/HiWay-Media/youtube-go-example/env"
 	"golang.org/x/oauth2"
-	"google.golang.org/api/urlshortener/v1"
 	"google.golang.org/api/youtube/v3"
 )
 
@@ -22,7 +21,7 @@ func main() {
 			AuthURL:  "https://provider.com/o/oauth2/auth",
 			TokenURL: "https://provider.com/o/oauth2/token",
 		},
-		Scopes: []string{urlshortener.UrlshortenerScope},
+		Scopes: []string{youtube.YoutubeUploadScope},
 	}
 
 	// use PKCE to protect against CSRF attacks

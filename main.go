@@ -7,16 +7,17 @@ import (
 
 	"github.com/HiWay-Media/youtube-go-example/env"
 	"golang.org/x/oauth2"
+	"google.golang.org/api/option"
 	"google.golang.org/api/youtube/v3"
 )
 
 func main() {
 
-	config := env.GetEnvConfig()
+	appConfig := env.GetEnvConfig()
 	ctx := context.Background()
 	conf := &oauth2.Config{
-		ClientID:     config.ClientID,     // from https://console.developers.google.com/project/<your-project-id>/apiui/credential
-		ClientSecret: config.ClientSecret, // from https://console.developers.google.com/project/<your-project-id>/apiui/credential
+		ClientID:     appConfig.ClientID,     // from https://console.developers.google.com/project/<your-project-id>/apiui/credential
+		ClientSecret: appConfig.ClientSecret, // from https://console.developers.google.com/project/<your-project-id>/apiui/credential
 		Endpoint: oauth2.Endpoint{
 			AuthURL:  "https://provider.com/o/oauth2/auth",
 			TokenURL: "https://provider.com/o/oauth2/token",
@@ -46,10 +47,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	client := conf.Client(ctx, tok)
-	client.Get("...")
+	//client := conf.Client(ctx, tok)
+	//client.Get("...")
 
-	service, err := youtube.NewService(ctx)
+	// Create a new YouTube service
+	service, err := youtube.NewService(ctx, option.WithTokenSource(conf.TokenSource(ctx, tok)))
 	if err != nil {
 		log.Fatalf("Unable to create YouTube service: %v", err)
 	}
@@ -66,5 +68,6 @@ func main() {
 	// The API returns a 400 Bad Request response if tags is an empty string.
 	upload.Snippet.Tags = []string{"test", "upload", "api"}
 	log.Println("Uploading video...", service)
-	//call := service.Videos.Insert([]string{"snippet", "status"}, upload)
+	call := service.Videos.Insert([]string{"snippet", "status"}, upload)
+	log.Println("Uploading video...", call)
 }

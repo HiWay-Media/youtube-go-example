@@ -1,6 +1,6 @@
 module github.com/HiWay-Media/youtube-go-example
 
-go 1.21.1
+go 1.19
 
 require (
 	cloud.google.com/go/auth v0.6.1 // indirect
